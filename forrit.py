@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import render_template
+from sys import argv
 app = Flask(__name__)
 
 @app.route('/')
@@ -14,4 +15,4 @@ def sida2():
 
 if __name__ == "__main__":
 #    app.run(debug=True, use_reloader=True)
-    app.run()
+    app.run(host="0.0.0.0",argv[1])
