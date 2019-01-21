@@ -1,1 +1,1 @@
-web: python3 forrit.py
+web: gunicorn app:app --log-file=-
