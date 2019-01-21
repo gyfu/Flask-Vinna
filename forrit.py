@@ -14,5 +14,5 @@ def sida2():
     return render_template('index.html',title="Síða þrjú",content="Lorem Síða 3")
 
 if __name__ == "__main__":
-#    app.run(debug=True, use_reloader=True)
-    app.run(host="0.0.0.0",port=argv[1])
+    app.run(debug=False, use_reloader=True)
+#    app.run(host="0.0.0.0",port=argv[1])
