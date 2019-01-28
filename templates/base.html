@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{{ title }}</title>
+	</head>
+	<body>
+		{% include "header.html" %}
+		{% block content %}
+		<h1>Fréttir</h1>
+		<ul>
+			<li><a href="/frett/0">Frétt 1</a></li>
+			<li><a href="/frett/1">Frétt 2</a></li>
+			<li><a href="/frett/2">Frétt 3</a></li>
+			<li><a href="/frett/3">Frétt 4</a></li>
+		</ul>
+		{% endblock %}
+		{% include "footer.html" %}
+	</body>
+</html>

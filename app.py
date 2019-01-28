@@ -1,17 +1,25 @@
-from flask import Flask
+from flask import Flask, request, url_for
 from flask import render_template
 app = Flask(__name__)
-
+frettir=[
+        ["Banaslys á sjó","Lorem Ipsum","htj@htj.is"],
+        ["Fiskveiðifrétt","Lorem Ipsum","bb@bb.is"],
+        ["Stríð í Gaza","Lorem Ipsum","frs@frs.com"],
+        ["Kína er að gera eitthvað, ég veit ekki","Lorem Ipsum","cnn@cnn.is"]
+        ]
 @app.route('/')
-def hello_world():
-    return render_template('index.html', title="Síða eitt", content="Lorem Síða 1.")
-@app.route('/sida1')
-def sida1():
-    return render_template('index.html',title="Síða tvö",content="Lorem Síða 2")
-@app.route('/sida2')
-def sida2():
-    return render_template('index.html',title="Síða þrjú",content="Lorem Síða 3")
+def main():
+    return render_template("base.html",title="Verkefni3 - Fréttir")
+@app.route('/frett/<int:num>')
+def frettir(num):
+    return str(num)
+@app.errorhandler(404)
+def page_not_found(e):
+    return "Þessi sýða fannst ekki(404 error)"
+
+
 
 if __name__ == "__main__":
-#    app.run(debug=True, use_reloader=True)
-    app.run()
+    app.run(debug=True, use_reloader=True)
+#    app.run()
+
