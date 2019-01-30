@@ -1,18 +1,14 @@
 from flask import Flask, request, url_for
 from flask import render_template
+import urllib, json
 app = Flask(__name__)
-frettir=[
-        ["Banaslys á sjó","Lorem Ipsum","htj@htj.is"],
-        ["Fiskveiðifrétt","Lorem Ipsum","bb@bb.is"],
-        ["Stríð í Gaza","Lorem Ipsum","frs@frs.com"],
-        ["Kína er að gera eitthvað, ég veit ekki","Lorem Ipsum","cnn@cnn.is"],
-        ]
+
+with urllib.request.urlopen("http://apis.is/currency/m5") as url:
+    data = json.loads(url.read().decode())
+    test=data["results"][0]["longName"]
 @app.route('/')
 def main():
-    return render_template("base.html",title="Verkefni3 - Fréttir", titill="Test")
-@app.route('/frett/<int:num>')
-def frett(num):
-    return render_template("content.html",titill=frettir[num][0],texti=frettir[num][1],hofundur=frettir[num][2])
+    return render_template("content.html",title="Verkefni4 - API", titill="API verkefni", efni=data["results"])
 @app.errorhandler(404)
 def page_not_found(e):
     return "Þessi sýða fannst ekki(404 error)"
