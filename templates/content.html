@@ -1,9 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="content">
-	{% for i in efni %}
-	<h2>{{ i["longName"] }}</h2>
-	<h3>{{ i["shortName"]}} {{ i["value"] }}kr</h3>
-	{% endfor %}
+	<table>
+		{% for x in efni %}
+		<tr>
+			<td>{{ company }}</td>
+			<td>{{ x }}</td>
+		</tr>
+		{% endfor %}
+	</table>
 </div>
 {% endblock %}

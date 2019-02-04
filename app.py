@@ -2,13 +2,27 @@ from flask import Flask, request, url_for
 from flask import render_template
 import urllib, json
 app = Flask(__name__)
-
-with urllib.request.urlopen("http://apis.is/currency/m5") as url:
+title="Miðannarverkefni"
+titill="Bensín"
+with urllib.request.urlopen("http://apis.is/petrol") as url:
     data = json.loads(url.read().decode())
-    test=data["results"][0]["longName"]
 @app.route('/')
 def main():
-    return render_template("content.html",title="Verkefni4 - API", titill="API verkefni", efni=data["results"])
+    listi=[]
+    for x in data["results"]:
+        if x["company"] in listi:
+            pass
+        else:
+            listi.append(x["company"])
+    return render_template("front.html",title=title,titill=titill,efni=listi)
+@app.route('/company/<company>')
+def fyrirtaekji(company):
+    listi=[]
+    for x in data["results"]:
+        if x["company"]==company:
+            listi.append(x["name"])
+    return render_template("content.html",title=title,titill=titill,efni=listi,company=company)
+
 @app.errorhandler(404)
 def page_not_found(e):
     return "Þessi sýða fannst ekki(404 error)"
