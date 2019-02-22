@@ -21,8 +21,8 @@ def fyrirtaekji(company):
     for x in data["results"]:
         if x["company"]==company:
             listi.append(x["name"])
-    return render_template("content.html",title=title,titill=titill,efni=listi,company=company)
-
+    lengd=len(listi)
+    return render_template("content.html",title=title,titill=titill,efni=listi,company=company,num=lengd)
 @app.errorhandler(404)
 def page_not_found(e):
     return "Þessi sýða fannst ekki(404 error)"
