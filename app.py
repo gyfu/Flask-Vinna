@@ -1,35 +1,46 @@
-from flask import Flask, request, url_for
-from flask import render_template
-import urllib, json
+from flask import Flask, request, url_for, render_template, session, redirect, g
+import urllib, json, os
 app = Flask(__name__)
-title="Miðannarverkefni"
-titill="Bensín"
-with urllib.request.urlopen("http://apis.is/petrol") as url:
-    data = json.loads(url.read().decode())
+app.secret_key=os.urandom(24)
+titlestring="Verkefni 6 - Login"
+
 @app.route('/')
-def main():
-    listi=[]
-    for x in data["results"]:
-        if x["company"] in listi:
-            pass
-        else:
-            listi.append(x["company"])
-    return render_template("front.html",title=title,titill=titill,efni=listi)
-@app.route('/company/<company>')
-def fyrirtaekji(company):
-    listi=[]
-    for x in data["results"]:
-        if x["company"]==company:
-            listi.append(x["name"])
-    lengd=len(listi)
-    return render_template("content.html",title=title,titill=titill,efni=listi,company=company,num=lengd)
+@app.route('/index')
+def index():
+    if g.user:
+        return render_template("index.html",title=titlestring,test=session["user"])
+    return render_template("index.html",title=titlestring)
+
+@app.route('/login',methods=["GET","POST"])
+def login():
+    if request.method=="POST":
+        session.pop("user", None)
+        if request.form["password"]=="password":
+            session['user']=request.form["user"]
+            return redirect(url_for("index"))
+    return render_template("login.html", title=titlestring)
+
+@app.route('/logout')
+def logout():
+    referrer=request.referrer
+    session.pop("user",None)
+    return redirect(referrer)
+
+@app.before_request
+def before_request():
+    g.user=None
+    if "user" in session:
+        g.user=session["user"]
+
 @app.errorhandler(404)
 def page_not_found(e):
     return "Þessi sýða fannst ekki(404 error)"
 
 
 
+
+
 if __name__ == "__main__":
-#    app.run(debug=True, use_reloader=True)
-    app.run()
+    app.run(debug=True, use_reloader=True)
+#    app.run()
 
