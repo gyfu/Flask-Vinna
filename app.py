@@ -30,8 +30,7 @@ def svar():
     if g.user:
         string="Cookie er data sem server sendir client sem geymir upplýsingar um client-in og það sem hann gerir. Session er tímabilið sem client er í þegar hann er t.d. loggaður inn á vefsíðu. Cache er upplýsingasafn á vafra hjá notanda"
         return render_template("svar.html", efni=string)
-    else:
-        return render_template("svar.html",efni="Þú hefur ekki aðgang að þessari síðu")
+    return render_template("svar.html",efni="Þú hefur ekki aðgang að þessari síðu")
 
 @app.before_request
 def before_request():
