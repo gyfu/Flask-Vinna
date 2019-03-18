@@ -1,28 +1,13 @@
-from flask import Flask, request, url_for
-from flask import render_template
+from flask import Flask, request, url_for, render_template
+from flask_wtf import Form
+from wtform import StringField, PasswordField
+from wtform.validators import DataRequired, Email
 import urllib, json
 app = Flask(__name__)
-title="Miðannarverkefni"
-titill="Bensín"
-with urllib.request.urlopen("http://apis.is/petrol") as url:
-    data = json.loads(url.read().decode())
 @app.route('/')
+@app.route('/index')
 def main():
-    listi=[]
-    for x in data["results"]:
-        if x["company"] in listi:
-            pass
-        else:
-            listi.append(x["company"])
-    return render_template("front.html",title=title,titill=titill,efni=listi)
-@app.route('/company/<company>')
-def fyrirtaekji(company):
-    listi=[]
-    for x in data["results"]:
-        if x["company"]==company:
-            listi.append(x["name"])
-    lengd=len(listi)
-    return render_template("content.html",title=title,titill=titill,efni=listi,company=company,num=lengd)
+    return render_template("content.html", title="Verkefni 5 - Forms")
 @app.errorhandler(404)
 def page_not_found(e):
     return "Þessi sýða fannst ekki(404 error)"
@@ -30,6 +15,6 @@ def page_not_found(e):
 
 
 if __name__ == "__main__":
-#    app.run(debug=True, use_reloader=True)
-    app.run()
+    app.run(debug=True, use_reloader=True)
+#    app.run()
 
