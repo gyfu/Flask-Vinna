@@ -1,8 +1,13 @@
 from flask import Flask, request, url_for, render_template, session, redirect, g
 import urllib, json, os
+from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
+app.config["SQLALCHEMY_DATABASE_URI"]="sqlite:///app.db"
 app.secret_key=os.urandom(24)
-titlestring="Verkefni 6 - Login"
+titlestring="Verkefni 7 - Login/MySQL"
+
+db=SQLAlchemy(app)
+
 
 @app.route('/')
 @app.route('/index')
@@ -47,6 +52,6 @@ def page_not_found(e):
 
 
 if __name__ == "__main__":
-#    app.run(debug=True, use_reloader=True)
-    app.run()
+    app.run(debug=True, use_reloader=True)
+#    app.run()
 
