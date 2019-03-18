@@ -15,9 +15,9 @@ def index():
 def login():
     if request.method=="POST":
         session.pop("user", None)
-        if request.form["password"]=="password":
+        if request.form["password"]=="password" and request.form["user"]=="admin":
             session['user']=request.form["user"]
-            return redirect(url_for("index"))
+            return redirect(url_for("svar"))
     return render_template("login.html", title=titlestring)
 
 @app.route('/logout')
@@ -25,6 +25,13 @@ def logout():
     referrer=request.referrer
     session.pop("user",None)
     return redirect(referrer)
+@app.route('/svar')
+def svar():
+    if g.user:
+        string="Cookie er data sem server sendir client sem geymir upplýsingar um client-in og það sem hann gerir. Session er tímabilið sem client er í þegar hann er t.d. loggaður inn á vefsíðu. Cache er upplýsingasafn á vafra hjá notanda"
+        return render_template("svar.html", efni=string)
+    else:
+        return render_template("svar.html",efni="Þú hefur ekki aðgang að þessari síðu")
 
 @app.before_request
 def before_request():
@@ -41,6 +48,6 @@ def page_not_found(e):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, use_reloader=True)
-#    app.run()
+#    app.run(debug=True, use_reloader=True)
+    app.run()
 
